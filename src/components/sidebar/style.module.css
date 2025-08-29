@@ -1,0 +1,73 @@
+.menuToggle {
+  display: none;
+}
+
+.menuIcon {
+  cursor: pointer;
+  font-size: 2em;
+  position: fixed; 
+  right: 20px; 
+  z-index: 1001; 
+  color: #fff; 
+  padding: 5px; 
+}
+
+.nav {
+  position: fixed; 
+  top: 0;
+  right: -300px; 
+  width: 250px; 
+  height: 100vh;
+  transition: right 0.4s ease-in-out; 
+  z-index: 1000; 
+  padding-top: 60px; 
+}
+
+.nav.open {
+  right: 0; 
+}
+
+.closeMenuIcon {
+  background-color: transparent;
+  position: absolute; 
+  top: 15px; 
+  left: 10px; 
+  font-size: 2em; 
+  cursor: pointer; 
+  color: #fff; 
+  border: none;
+  z-index: 1002;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.navItem {
+  margin-bottom: 10px;
+}
+
+.navLink{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.navLink:hover {
+  background-color: rgba(0, 0, 0, 0.1); 
+}
+
+
+.navIcon {
+  margin-right: 8px;
+  font-size: 24px;
+  color: inherit; 
+}

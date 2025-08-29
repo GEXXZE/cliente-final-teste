@@ -1,0 +1,88 @@
+.scanner-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.scanner-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #1a73e8;
+  color: white;
+  position: relative;
+  z-index: 10;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 16px;
+}
+
+.back-button svg {
+  fill: white;
+}
+
+.scanner-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.scanner-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* Opcional: Estilo para a área de escaneamento */
+#reader video {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.scanner-footer {
+  padding: 24px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.scanner-footer p {
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.manual-input-button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background-color: #1a73e8;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.manual-input-button:hover {
+  background-color: #165ab7;
+}
+
+.scan-result {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #e6f3ff;
+  border: 1px solid #cce7ff;
+  border-radius: 4px;
+}

@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color: #fff;
+    padding: 10px;         
+    border-radius: 12px;   
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 220px;          
+    height: 220px;
+}
+
+.qrCode {
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
