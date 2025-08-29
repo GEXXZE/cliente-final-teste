@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/cliente-final/(.*)", "destination": "/index.html" }
+  ]
+}
