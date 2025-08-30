@@ -29,6 +29,7 @@ export default function EscanearQr() {
 
     const onScanError = (errorMessage: string) => {
       console.error('Erro ao escanear:', errorMessage);
+      navigate("/cliente-final/agendar");
     };
 
     qrCodeScanner.render(onScanSuccess, onScanError);
