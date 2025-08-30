@@ -5,3 +5,5 @@ interface Prestador {
   fotoPerfil?: string;
   email: string;
 }
+
+export default Prestador;
