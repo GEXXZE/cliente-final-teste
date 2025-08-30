@@ -1,117 +1,50 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useSearchParams } from "react-router-dom";
+//import styles from './style.module.css';
 
-
-import styles from './style.module.css';
+interface Prestador {
+  id: number;
+  nome: string;
+  slug: string;
+  fotoPerfil?: string;
+  email: string;
+}
 
 export default function Agendar() {
-  const { username } = useParams();
-  const [horarios, setHorarios] = useState<Date[]>([]);
-  const [nomeCliente, setNomeCliente] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [dataSelecionada, setDataSelecionada] = useState<string | null>(null);
-  const [whatsLink, setWhatsLink] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const slug = searchParams.get('slug');
+  const [prestador, setPrestador] = useState<Prestador | null>(null);
 
   useEffect(() => {
-    const carregar = async () => {
-      const res = await axios.get(`http://localhost:5000/api/disponibilidade/${username}`);
-      const horariosGerados: Date[] = gerarHorariosProximos(res.data);
-      setHorarios(horariosGerados);
-    };
-    carregar();
-  }, [username]);
+    if (!slug) return;
 
-  const gerarHorariosProximos = (disponibilidades: any[]) => {
-    const hoje = new Date();
-    const diasGerados: Date[] = [];
-
-    for (let diaOffset = 0; diaOffset < 7; diaOffset++) {
-      const data = new Date(hoje);
-      data.setDate(data.getDate() + diaOffset);
-      const diaSemana = data.getDay();
-
-      const disponivelHoje = disponibilidades.find((d) => d.diaSemana === diaSemana);
-      if (disponivelHoje) {
-        const [hIniH, hIniM] = disponivelHoje.horaInicio.split(":").map(Number);
-        const [hFimH, hFimM] = disponivelHoje.horaFim.split(":").map(Number);
-
-        const inicio = new Date(data);
-        inicio.setHours(hIniH, hIniM, 0, 0);
-
-        const fim = new Date(data);
-        fim.setHours(hFimH, hFimM, 0, 0);
-
-        while (inicio < fim) {
-          diasGerados.push(new Date(inicio));
-          inicio.setMinutes(inicio.getMinutes() + 30);
-        }
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://192.168.1.2:5000/api/Prestador/${slug}/dados-agendamento`);
+        if (!res.ok) throw new Error('Erro ao carregar prestador');
+        const data = await res.json();
+        setPrestador(data.prestador);
+      } catch (err) {
+        console.error(err);
       }
-    }
-    return diasGerados;
-  };
+    };
 
-  const agendar = async () => {
-    if (!dataSelecionada || !nomeCliente || !telefone) return alert("Preencha todos os campos");
+    fetchData();
+  }, [slug]);
 
-    const res = await axios.post(`http://localhost:5000/api/agendamentos/${username}`, {
-      nomeCliente,
-      telefoneCliente: telefone,
-      dataHora: dataSelecionada,
-      observacoes: ""
-    });
-
-    setWhatsLink(res.data.whatsappLink);
-  };
+  if (!slug) return <p>Slug não informado</p>;
+  if (!prestador) return <p>Carregando dados do prestador...</p>;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.grid}>
-        <h2 className={styles.title}>
-          Agende com <span className={styles.name}> {username} </span>
-        </h2>
+    <div style={{ padding: 20 }}>
+      <h2>Agendar com {prestador.nome}</h2>
+      {prestador.fotoPerfil && (
+        <img src={prestador.fotoPerfil} alt={prestador.nome} width={100} style={{ borderRadius: '50%' }} />
+      )}
+      <p>Email: {prestador.email}</p>
+      <p>Slug: {prestador.slug}</p>
 
-        <input
-          className={styles.input}
-          placeholder="Seu nome"
-          value={nomeCliente}
-          onChange={(e) => setNomeCliente(e.target.value)}
-        />
-
-        <input
-          className={styles.input}
-          placeholder="Seu telefone (ex: 5527997333212)"
-          value={telefone}
-          onChange={(e) => setTelefone(e.target.value)}
-        />
-
-        <h4 className={styles.subtitle}>Escolha um horário:</h4>
-
-        <div className={styles.horariosContainer}>
-          {horarios.map((h, i) => (
-            <button
-              key={i}
-              onClick={() => setDataSelecionada(h.toISOString())}
-              className={`${styles.horarioBtn} ${dataSelecionada === h.toISOString() ? styles.selected : ""}`}
-            >
-              {h.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
-            </button>
-          ))}
-        </div>
-
-        <button className={styles.confirmBtn} onClick={agendar}>
-          Confirmar Agendamento
-        </button>
-
-        {whatsLink && (
-          <div className={styles.whatsappLinkContainer}>
-            <p>Toque abaixo para abrir no WhatsApp:</p>
-            <a href={whatsLink} target="_blank" rel="noopener noreferrer" className={styles.whatsLink}>
-              {whatsLink}
-            </a>
-          </div>
-        )}
-      </div>
+      {/* Aqui você coloca os cards de serviços, horários disponíveis, etc */}
     </div>
   );
 }

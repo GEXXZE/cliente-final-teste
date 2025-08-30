@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -6,7 +6,6 @@ import styles from './style.module.css';
 
 export default function EscanearQr() {
   const navigate = useNavigate();
-  const [result, setResult] = useState('');
   const scannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,23 +20,30 @@ export default function EscanearQr() {
       false
     );
 
+    // Função que lida com o sucesso do escaneamento
     const onScanSuccess = (decodedText: string, _: any) => { 
       console.log('Código QR escaneado:', decodedText);
-      setResult(decodedText);
+      
+      // Limpa o scanner para interromper o escaneamento
       qrCodeScanner.clear().catch(error => console.error(error));
+
+      // Navega para a página de agendamento com o valor do QR Code como parâmetro na URL
+      navigate(`/cliente-final/agendar/${decodedText}`);
     };
 
+    // Função que lida com erros de escaneamento
     const onScanError = (errorMessage: string) => {
       console.error('Erro ao escanear:', errorMessage);
-      navigate("/cliente-final/agendar");
     };
 
+    // Inicia o scanner
     qrCodeScanner.render(onScanSuccess, onScanError);
 
+    // Retorna uma função de limpeza que será executada quando o componente for desmontado
     return () => {
       qrCodeScanner.clear().catch(error => console.error(error));
     };
-  }, []);
+  }, [navigate]);
 
   const handleGoBack = () => {
     navigate('/');
@@ -61,7 +67,6 @@ export default function EscanearQr() {
         <button className={styles['manual-input-button']}>
           Inserir o código manualmente
         </button>
-        {result && <div className={styles['scan-result']}>Resultado: {result}</div>}
       </div>
     </div>
   );
