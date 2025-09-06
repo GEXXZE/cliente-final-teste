@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from '@/pages/cliente-final/home';
-import Agendar from '../pages/cliente-final/agendar';
-import EscanearQr from '@/pages/cliente-final/escanerQr';
+import Home from '@/pages/home';
+import Agendar from '../pages/agendar';
+import EscanearQr from '@/pages/escanerQr';
 
 export default function ClienteRoutes() {
 

@@ -4,8 +4,8 @@ import ClienteRoutes from '@/routes/clienteRoutes'
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/cliente-final/home" replace />} />
-      <Route path="/cliente-final/*" element={<ClienteRoutes />} />
+      <Route path="/" element={<Navigate to="/cliente/home" replace />} />
+      <Route path="/cliente/*" element={<ClienteRoutes />} />
     </Routes>
   )
 }
