@@ -5,7 +5,7 @@ import styles from './style.module.css';
 export function QrCodeButton() {
   return (
     <div className={styles['fab-container']}>
-      <Link to="/cliente-final/escanear" className={styles.fab}>
+      <Link to="/cliente/escanear" className={styles.fab}>
         <FaQrcode size={24} color="white" />
       </Link>
     </div>
