@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import Servico  from '@/types/servico';
+import { Servico }  from '@/types/servico';
 
 interface ServiceData {
   name: string;
