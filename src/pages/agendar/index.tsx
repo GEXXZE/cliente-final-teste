@@ -3,7 +3,7 @@ import styles from './style.module.css';
 import { useServiceData } from "@/hooks/useServiceData";
 import ProfileHeader from "@/components/profileHeader";
 import ServiceCard from "@/components/serviceCard";
-import LoadingSpinner from "@/components/loadingSpinner";
+import Loading from "@/components/loading"
 
 
 export default function Agendar() {
@@ -18,7 +18,7 @@ export default function Agendar() {
   if (loading) {
     return (
       <div className={styles.center}>
-        <LoadingSpinner />
+        <Loading />
       </div>
     );
   }
