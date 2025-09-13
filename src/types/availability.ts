@@ -1,3 +1,4 @@
 export interface Availability {
-    startTime: string;
+    time: string;
+    isAvailable: boolean
 }

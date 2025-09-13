@@ -1,4 +1,4 @@
-import { Availability } from '../services/api';
+import { Availability } from '@/types/availability';
 import './styles.css';
 
 interface TimeSlotSelectorProps {

@@ -1,4 +1,4 @@
-interface Servico{
+export interface Servico{
   nome: string;
   descricao: string;
   fotoPerfil: string;
@@ -6,4 +6,3 @@ interface Servico{
   valor: string;
 };
 
-export default Servico;

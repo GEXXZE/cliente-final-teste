@@ -37,7 +37,7 @@ export const getAvailableTimeSlots = async (
     const data: ApiTimeSlot[] = await response.json();
 
     return data.map(slot => ({
-      startTime: slot.horario,
+      time: slot.horario,
       isAvailable: slot.disponivel,
     }));
   } catch (error) {
