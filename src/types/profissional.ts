@@ -1,3 +1,5 @@
-export type Profissional = {
-  Nome: string;
+export interface Profissional {
+  id: number;
+  nome: string;
+  urlFoto: string
 };

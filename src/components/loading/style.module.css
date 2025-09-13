@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f3f4f6; 
+}
+
+@keyframes spin-3d {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.spin3d {
+  width: 5rem; 
+  height: 5rem;  
+  animation: spin-3d 1.5s linear infinite;
+  transform-style: preserve-3d;
+}

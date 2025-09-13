@@ -1,7 +1,9 @@
-export type Servico = {
-  Nome: string;
-  Descricao: string;
-  FotoPerfil: string;
-  Duracao: string;
-  Valor: string;
+interface Servico{
+  nome: string;
+  descricao: string;
+  fotoPerfil: string;
+  duracao: string;
+  valor: string;
 };
+
+export default Servico;

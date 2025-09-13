@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+const API_BASE_URL = axios.create({
   baseURL: 'https://meetservices.onrender.com/api/', 
   timeout: 5000,
   withCredentials: true, 
@@ -30,7 +30,7 @@ const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue = [];
 };
 
-api.interceptors.response.use(
+API_BASE_URL.interceptors.response.use(
   (response) => response, 
   async (error) => {
     const originalRequest = error.config;
@@ -40,7 +40,7 @@ api.interceptors.response.use(
           failedQueue.push({ resolve, reject });
         }).then(token => {
           originalRequest.headers.Authorization = `Bearer ${token}`;
-          return api(originalRequest);
+          return API_BASE_URL(originalRequest);
         }).catch(err => {
           return Promise.reject(err);
         });
@@ -49,14 +49,14 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       return new Promise((resolve, reject) => {
-        api.post('/auth/refresh')
+        API_BASE_URL.post('/auth/refresh')
           .then(res => {
             const { accessToken } = res.data;
-            api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+            API_BASE_URL.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
             processQueue(null, accessToken);
-            resolve(api(originalRequest));
+            resolve(API_BASE_URL(originalRequest));
           })
           .catch(err => {
             processQueue(err, null);
@@ -74,4 +74,4 @@ api.interceptors.response.use(
 
 );
 
-export default api;
+export default API_BASE_URL;
