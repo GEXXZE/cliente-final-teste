@@ -4,7 +4,7 @@ import { useServiceData } from "@/hooks/useServiceData";
 import ProfileHeader from "@/components/profileHeader";
 import ServiceCard from "@/components/serviceCard";
 import Loading from "@/components/loading"
-
+import { Servico } from "@/types/servico";
 
 export default function Agendar() {
   const [searchParams] = useSearchParams();
@@ -36,7 +36,7 @@ export default function Agendar() {
       
       <div className={styles.servicesList}>
         {data.services && Array.isArray(data.services) && data.services.length > 0 ? (
-          data.services.map((service, index) => (
+          data.services.map((service: Servico, index: number) => (
             <ServiceCard key={index} service={service} />
           ))
         ) : (
