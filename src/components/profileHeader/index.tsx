@@ -1,7 +1,7 @@
 import styles from './style.module.css';
 import API_BASE_URL from '@/services/api';
 import Prestador from '@/types/prestador';
-import defaultProfileImg from '@/assets/default-profile.png';
+import defaultProfileImg from '@/assets/imagemDefault.png';
 
 interface ProfileHeaderProps {
   prestador: Prestador;
