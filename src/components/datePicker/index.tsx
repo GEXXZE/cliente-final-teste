@@ -1,4 +1,4 @@
-import './styles.css';
+import style from './style.module.css';
 
 interface DatePickerProps {
   onDateSelect: (date: Date) => void;
@@ -26,7 +26,7 @@ export function DatePicker({ onDateSelect, selectedDate }: DatePickerProps){
   const weekDays = getWeekDays();
 
   return (
-    <div className="date-picker-container">
+    <div className={style.container}>
       <h3>Agendar Dia</h3>
       <div className="date-picker-list">
         {weekDays.map((day, index) => (
