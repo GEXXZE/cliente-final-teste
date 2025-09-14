@@ -1,15 +1,26 @@
 import styles from './style.module.css';
+import API_BASE_URL from '@/services/api';
+import Prestador from '@/types/prestador';
+import defaultProfileImg from '@/assets/default-profile.png';
 
 interface ProfileHeaderProps {
-  name: string;
-  profileImage: string;
+  prestador: Prestador;
 }
 
-export default function ProfileHeader({ name, profileImage }: ProfileHeaderProps) {
+export default function ProfileHeader({ prestador }: ProfileHeaderProps) {
+    const baseUrl = API_BASE_URL.defaults.baseURL?.replace('/api', '') + '/uploads/';
+    const fotoUrl = prestador?.FotoPerfil
+    ? `${baseUrl}${prestador.FotoPerfil}`
+    : defaultProfileImg; 
+
     return (
         <div className={styles.profileHeader}>
-            <img src={profileImage} alt="Foto de Perfil" className={styles.profileImage} />
-            <h2 className={styles.profileName}>{name}</h2>
+            <img 
+                src={fotoUrl} 
+                alt="Foto de Perfil" 
+                className={styles.profileImage} 
+            />
+            <h2 className={styles.profileName}>{prestador.Nome}</h2>
         </div>
     )
 }

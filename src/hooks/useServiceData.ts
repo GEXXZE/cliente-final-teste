@@ -5,14 +5,14 @@ import { Servico }  from '@/types/servico';
 
 interface AutonomoData {
   tipo: 'AUTONOMO';
-  prestador: { Nome: string };
+  prestador: { Id: number, Nome: string, FotoPerfil: string };
   servicos: Servico[];
   disponibilidade: any[];
 }
 
 interface EmpresaData {
   tipo: 'EMPRESA';
-  prestador: { Nome: string };
+  prestador: { Id: number, Nome: string, FotoPerfil: string };
   profissionais: any[];
 }
 
@@ -41,15 +41,17 @@ export const useServiceData = (slug: string) => {
 
         if (apiData.tipo === 'AUTONOMO') {
           formattedData = {
+            id: apiData.prestador.Id,
             name: apiData.prestador.Nome,
-            profileImage: '', 
+            profileImage: apiData.prestador.FotoPerfil || '', 
             services: apiData.servicos,
             disponibilidade: apiData.disponibilidade
           };
         } else if (apiData.tipo === 'EMPRESA') {
           formattedData = {
+            id: apiData.prestador.Id,
             name: apiData.prestador.Nome,
-            profileImage: '',
+            profileImage: apiData.prestador.FotoPerfil || '',
             services: apiData.profissionais, 
             isEmpresa: true
           };

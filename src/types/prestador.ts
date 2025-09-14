@@ -1,9 +1,7 @@
 interface Prestador {
-  id: number;
-  nome: string;
-  slug: string;
-  fotoPerfil?: string;
-  email: string;
+  Id: number;
+  Nome: string;
+  FotoPerfil?: string;
 }
 
 export default Prestador;

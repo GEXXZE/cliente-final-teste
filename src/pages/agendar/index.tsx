@@ -32,7 +32,13 @@ export default function Agendar() {
   }
   return (
     <div className={styles.container}>
-      <ProfileHeader name={data?.name} profileImage={data?.profileImage} />
+      <ProfileHeader 
+        prestador={{
+          Id: data.id,
+          Nome: data.name,
+          FotoPerfil: data.profileImage
+        }}  
+      />
       
       <div className={styles.servicesList}>
         {data.services && Array.isArray(data.services) && data.services.length > 0 ? (
