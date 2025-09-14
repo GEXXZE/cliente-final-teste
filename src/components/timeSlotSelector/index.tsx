@@ -1,5 +1,5 @@
 import { Availability } from '@/types/availability';
-import './styles.css';
+import styles from './style.module.css';
 
 interface TimeSlotSelectorProps {
   timeSlots: Availability[];
@@ -9,7 +9,7 @@ interface TimeSlotSelectorProps {
 
 export function TimeSlotSelector({timeSlots,onTimeSlotSelect, selectedTimeSlot}: TimeSlotSelectorProps) {
   return (
-    <div className="time-slot-container">
+    <div className={styles.timeSlotContainer}>
       <h3>Selecionar Horário</h3>
       <div className="time-slot-grid">
         {timeSlots.map((slot) => (
