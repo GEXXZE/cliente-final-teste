@@ -27,7 +27,7 @@ export default function Agendar() {
     return <p>Erro ao carregar dados: {error}. Tente novamente mais tarde.</p>;
   }
 
-  if (!data) {
+  if (!data || !data.name) {
     return <p>Nenhum prestador encontrado para o slug: {slug}.</p>;
   }
   return (

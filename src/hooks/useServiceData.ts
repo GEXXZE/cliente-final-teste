@@ -22,9 +22,20 @@ export const useServiceData = (slug: string) => {
 
       try {
         const response = await api.post(`Prestador/${slug}/dados-agendamento`);
-        setData(response.data);
+
+         const responseData = {
+          name: response.data.prestador.Nome, 
+          profileImage: '', 
+          services: response.data.servicos 
+        };
+
+        setData(responseData);
       } catch (err: any) {
-        setError(err.message || "Erro desconhecido");
+        if (err.response) {
+            setError(`Erro ao buscar dados: ${err.response.status}`);
+        } else {
+            setError(err.message || "Erro desconhecido");
+        }
       } finally {
         setLoading(false);
       }
