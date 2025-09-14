@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { FormattedServiceData } from '@/interfaces/formattedServiceData';
 import { Servico }  from '@/types/servico';
 
 interface AutonomoData {
@@ -18,7 +19,7 @@ interface EmpresaData {
 type ApiResponse = AutonomoData | EmpresaData;
 
 export const useServiceData = (slug: string) => {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<FormattedServiceData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,12 +37,12 @@ export const useServiceData = (slug: string) => {
         const response = await api.get<ApiResponse>(`Prestador/${slug}/dados-agendamento`);
         const apiData = response.data;
 
-        let formattedData = {};
+        let formattedData: FormattedServiceData;
 
         if (apiData.tipo === 'AUTONOMO') {
           formattedData = {
             name: apiData.prestador.Nome,
-            profileImage: '', // A API não retorna a imagem, então definimos como vazia
+            profileImage: '', 
             services: apiData.servicos,
             disponibilidade: apiData.disponibilidade
           };
@@ -49,9 +50,12 @@ export const useServiceData = (slug: string) => {
           formattedData = {
             name: apiData.prestador.Nome,
             profileImage: '',
-            services: apiData.profissionais, // Tratamos 'profissionais' como 'servicos'
+            services: apiData.profissionais, 
             isEmpresa: true
           };
+        }
+        else {
+          throw new Error('Tipo de prestador desconhecido');
         }
 
         setData(formattedData);
