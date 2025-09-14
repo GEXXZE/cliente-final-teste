@@ -21,7 +21,7 @@ export const useServiceData = (slug: string) => {
       setError(null);
 
       try {
-        const response = await api.post(`Prestador/${slug}/dados-agendamento`);
+        const response = await api.get(`Prestador/${slug}/dados-agendamento`);
 
          const responseData = {
           name: response.data.prestador.Nome, 
