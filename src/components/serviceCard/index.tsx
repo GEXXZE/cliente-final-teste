@@ -8,10 +8,10 @@ interface ServiceCardProps {
 export default function ServiceCard({ service }: ServiceCardProps) {
     return (
         <div className={styles.card}>
-            <h3>{service.nome}</h3>
-            <p><strong>Descrição:</strong> {service.descricao}</p>
-            <p><strong>Duração:</strong> {service.duracao}</p>
-            <p><strong>Valor:</strong> {service.valor}</p>
+            <h3>{service.Nome}</h3>
+            <p><strong>Descrição:</strong> {service.Descricao}</p>
+            <p><strong>Duração:</strong> {service.DuracaoMinutos}</p>
+            <p><strong>Valor:</strong> {service.Valor}</p>
         </div>
     )
 }
