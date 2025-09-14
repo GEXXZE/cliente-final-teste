@@ -3,11 +3,12 @@ import styles from './style.module.css';
 
 interface ServiceCardProps {
   service: Servico;
+  onClick?: () => void;
 }
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+export default function ServiceCard({ service, onClick }: ServiceCardProps) {
     return (
-        <div className={styles.card}>
+        <div onClick={onClick} className={styles.card}>
             <h3>{service.Nome}</h3>
             <p><strong>Descrição:</strong> {service.Descricao}</p>
             <p><strong>Duração:</strong> {service.DuracaoMinutos}</p>

@@ -5,6 +5,8 @@ export interface FormattedServiceData {
     name: string;
     profileImage: string;
     services: Servico[] | any[]; 
-    isEmpresa?: boolean;
     disponibilidade?: any[];
+    profissionais?: any[];
+    isAutonomous?: boolean;
+    isEmpresa?: boolean;
 }

@@ -37,24 +37,22 @@ export const useServiceData = (slug: string) => {
         const response = await api.get<ApiResponse>(`Prestador/${slug}/dados-agendamento`);
         const apiData = response.data;
 
-        let formattedData: FormattedServiceData;
+        let formattedData: FormattedServiceData= {
+          id: apiData.prestador.Id,
+          name: apiData.prestador.Nome,
+          profileImage: apiData.prestador.FotoPerfil || '',
+          services: [],
+          isAutonomous: false, 
+          isEmpresa: false,    
+        };
 
         if (apiData.tipo === 'AUTONOMO') {
-          formattedData = {
-            id: apiData.prestador.Id,
-            name: apiData.prestador.Nome,
-            profileImage: apiData.prestador.FotoPerfil || '', 
-            services: apiData.servicos,
-            disponibilidade: apiData.disponibilidade
-          };
+          formattedData.services = apiData.servicos;
+          formattedData.disponibilidade = apiData.disponibilidade;
+          formattedData.isAutonomous = true;
         } else if (apiData.tipo === 'EMPRESA') {
-          formattedData = {
-            id: apiData.prestador.Id,
-            name: apiData.prestador.Nome,
-            profileImage: apiData.prestador.FotoPerfil || '',
-            services: apiData.profissionais, 
-            isEmpresa: true
-          };
+          formattedData.services = apiData.profissionais;
+          formattedData.isEmpresa = true;
         }
         else {
           throw new Error('Tipo de prestador desconhecido');
