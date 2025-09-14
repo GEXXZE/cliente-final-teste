@@ -12,7 +12,7 @@ export default function Agendar() {
   const { data, loading, error } = useServiceData(slug || '');
 
   if (!slug) {
-    return <p>Slug não informado</p>;
+    return <p>Slug não informado na URL. Verifique o código QR.</p>;
   }
 
   if (loading) {
@@ -24,19 +24,24 @@ export default function Agendar() {
   }
 
   if (error) {
-    return <p>Erro ao carregar dados: {error}</p>;
+    return <p>Erro ao carregar dados: {error}. Tente novamente mais tarde.</p>;
   }
 
   if (!data) {
-    return <p>Nenhum dado encontrado</p>;
+    return <p>Nenhum prestador encontrado para o slug: {slug}.</p>;
   }
   return (
     <div className={styles.container}>
-      <ProfileHeader name={data.name} profileImage={data.profileImage} />
+      <ProfileHeader name={data?.name} profileImage={data?.profileImage} />
+      
       <div className={styles.servicesList}>
-        {data.services.map((service, index) => (
-          <ServiceCard key={index} service={service} />
-        ))}
+        {data.services && Array.isArray(data.services) && data.services.length > 0 ? (
+          data.services.map((service, index) => (
+            <ServiceCard key={index} service={service} />
+          ))
+        ) : (
+          <p>Nenhum serviço disponível para agendamento.</p>
+        )}
       </div>
     </div>
   );
