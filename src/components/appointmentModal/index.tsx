@@ -67,10 +67,16 @@ export default function AppointmentModal({
     }
 
     const fetchTimeSlots = async () => {
+      if (!selectedProfissional || !selectedDate) return;
+
       setLoadingTimeSlots(true);
       try {
-        const formattedDate = selectedDate.toISOString().split("T")[0];
-        const data = await getAvailableTimeSlots(selectedProfissional.id, formattedDate);
+        const formattedDate = selectedDate.toISOString().split("T")[0]; 
+        const data = await getAvailableTimeSlots(
+          selectedProfissional.id,
+          formattedDate,
+          serviceId
+        );
         setTimeSlots(data);
       } catch (error) {
         console.error("Erro ao carregar horários:", error);
@@ -79,6 +85,7 @@ export default function AppointmentModal({
         setLoadingTimeSlots(false);
       }
     };
+
 
     fetchTimeSlots();
   }, [show, selectedProfissional, selectedDate]);
@@ -102,11 +109,11 @@ export default function AppointmentModal({
 
   return (
     <div className={styles.modalBackdrop}>
-      <div className={styles["modal-content"]}>
-        <button className={styles["close-button"]} onClick={onClose}>
+      <div className={styles.modalContent}>
+        <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-        <div className={styles["modal-scrollable-content"]}>
+        <div className={styles.modalScrollableContent}>
           {/* DatePicker */}
           <DatePicker onDateSelect={handleDateSelect} selectedDate={selectedDate} />
 
@@ -116,9 +123,9 @@ export default function AppointmentModal({
               <Loading />
             ) : (
                 <ProfissionalSelector
-                    profissionais={profissionais}
-                    onProfissionalSelect={handleProfissionalSelect}
-                    selectedProfissionalId={selectedProfissional?.id || null}
+                  profissionais={profissionais}
+                  onProfissionalSelect={handleProfissionalSelect}
+                  selectedProfissionalId={selectedProfissional?.id || null}
                 />
             ))}
 

@@ -27,13 +27,18 @@ export const getProfissionaisByService = async (providerSlug: string, serviceId:
 
 export const getAvailableTimeSlots = async (
   professionalId: number,
-  date: string
+  date: string,
+  serviceId: number
 ): Promise<Availability[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/horarios/${professionalId}/${date}`);
+    const response = await fetch(
+      `${API_BASE_URL}/Servico/horarios/${professionalId}/${date}?serviceId=${serviceId}`
+    );
+
     if (!response.ok) {
       throw new Error("Erro ao buscar horários");
     }
+
     const data: ApiTimeSlot[] = await response.json();
 
     return data.map(slot => ({
