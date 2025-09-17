@@ -5,18 +5,19 @@ import { Availability } from "@/types/availability";
 
 export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
-    const response = await API_BASE_URL.get(
-      `Servico/${serviceId}/profissionais`,{
-        params: { providerSlug } 
-      }
-    );
+    const url = `${API_BASE_URL}/Servico/${serviceId}/profissionais`;
+    const response = await fetch(`${url}?providerSlug=${encodeURIComponent(providerSlug)}`);
 
-    const data: any[] = response.data;
+     if (!response.ok) {
+      throw new Error(`Erro ao buscar profissionais: ${response.statusText}`);
+    }
 
-    return data.map(p => ({
-      id: p.id,
-      nome: p.nome,
-      urlFoto: p.FotoPerfil,
+    const data = await response.json();
+
+    return data.map((p: any) => ({
+      id: p.id ?? p.ID_USUARIO ?? p.id_usuario,
+      nome: p.nome ?? p.NOME ?? p.Nome,
+      urlFoto: p.FotoPerfil ?? p.foto_perfil ?? "",
     }));
   } catch (error) {
     console.error("Erro ao carregar profissionais:", error);
