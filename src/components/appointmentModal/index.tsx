@@ -40,14 +40,15 @@ export default function AppointmentModal({
 
   // Carregar profissionais (se não for autônomo)
   useEffect(() => {
-    if (!show) return;
+    if (!show || isProviderAutonomous) return;
 
     const fetchProfissionais = async () => {
       setLoadingProfissionais(true);
       try {
         const data = await getProfissionaisByService(providerSlug, serviceId);
         setProfissionais(data);
-        setSelectedProfissional(data.length > 0 ? data[0] : null);
+        // Não selecionar o primeiro profissional automaticamente para forçar o usuário a escolher
+        // setSelectedProfissional(data.length > 0 ? data[0] : null);
       } catch (error) {
         console.error("Erro ao carregar profissionais:", error);
         setProfissionais([]);
@@ -57,7 +58,7 @@ export default function AppointmentModal({
       }
     };
     fetchProfissionais();
-  }, [show, providerSlug, serviceId]);
+  }, [show, providerSlug, serviceId, isProviderAutonomous]);
 
   // Carregar horários
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function AppointmentModal({
 
       setLoadingTimeSlots(true);
       try {
-        const formattedDate = selectedDate.toISOString().split("T")[0]; 
+        const formattedDate = selectedDate.toISOString().split("T")[0];
         const data = await getAvailableTimeSlots(
           selectedProfissional.id,
           formattedDate,
@@ -86,9 +87,8 @@ export default function AppointmentModal({
       }
     };
 
-
     fetchTimeSlots();
-  }, [show, selectedProfissional, selectedDate]);
+  }, [show, selectedProfissional, selectedDate, serviceId]);
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
@@ -100,7 +100,13 @@ export default function AppointmentModal({
     if (prof) {
       setSelectedProfissional(prof);
       setSelectedTimeSlot(null);
+      // Ao selecionar um profissional, re-selecionar a data de hoje para recarregar horários
+      setSelectedDate(new Date());
     }
+  };
+
+  const handleTimeSlotSelect = (timeSlot: string) => {
+    setSelectedTimeSlot(timeSlot);
   };
 
   if (!show) {
@@ -114,32 +120,50 @@ export default function AppointmentModal({
           &times;
         </button>
         <div className={styles.modalScrollableContent}>
-          {/* DatePicker */}
-          <DatePicker onDateSelect={handleDateSelect} selectedDate={selectedDate} />
 
-          {/* Professional Selector (apenas para empresas) */}
-          {!isProviderAutonomous &&
-            (loadingProfessionals ? (
-              <Loading />
-            ) : (
+          {/* Seletor de Profissional (aparece primeiro se não for autônomo) */}
+          {!isProviderAutonomous && (
+            <>
+              <h2>Selecione o Profissional</h2>
+              {loadingProfessionals ? (
+                <Loading />
+              ) : (
                 <ProfissionalSelector
                   profissionais={profissionais}
                   onProfissionalSelect={handleProfissionalSelect}
                   selectedProfissionalId={selectedProfissional?.id || null}
                 />
-            ))}
+              )}
+            </>
+          )}
 
-          {/* Time Slot Selector */}
-          {selectedProfissional &&
-            (loadingTimeSlots ? (
-              <Loading />
-            ) : (
-              <TimeSlotSelector
-                timeSlots={timeSlots}
-                onTimeSlotSelect={setSelectedTimeSlot}
-                selectedTimeSlot={selectedTimeSlot}
-              />
-            ))}
+          {/* Seletor de Data e Horário (só aparece depois de um profissional ser selecionado) */}
+          {selectedProfissional && (
+            <>
+              <div className={styles.separator} />
+              <h2>Escolha a Data e o Horário</h2>
+              <DatePicker onDateSelect={handleDateSelect} selectedDate={selectedDate} />
+
+              {loadingTimeSlots ? (
+                <Loading />
+              ) : (
+                <TimeSlotSelector
+                  timeSlots={timeSlots}
+                  onTimeSlotSelect={handleTimeSlotSelect}
+                  selectedTimeSlot={selectedTimeSlot}
+                />
+              )}
+            </>
+          )}
+
+          {/* Botão de Confirmação (pode ser adicionado aqui) */}
+          {/* Você pode adicionar um botão de 'Confirmar' que só fica ativo quando selectedTimeSlot não é nulo. */}
+          {selectedTimeSlot && (
+            <button className={styles.confirmButton}>
+              Confirmar Agendamento
+            </button>
+          )}
+
         </div>
       </div>
     </div>
