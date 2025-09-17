@@ -18,17 +18,10 @@ interface AppointmentModalProps {
   show: boolean;
   onClose: () => void;
   providerSlug: string;
-  isProviderAutonomous: boolean;
   serviceId: number;
 }
 
-export default function AppointmentModal({
-  show,
-  onClose,
-  providerSlug,
-  isProviderAutonomous,
-  serviceId,
-}: AppointmentModalProps) {
+export default function AppointmentModal({show, onClose, providerSlug, serviceId }: AppointmentModalProps) {
   const [profissionais, setProfissionais] = useState<Profissional[]>([]);
   const [selectedProfissional, setSelectedProfissional] = useState<Profissional | null>(null);
   const [timeSlots, setTimeSlots] = useState<Availability[]>([]);
@@ -38,17 +31,19 @@ export default function AppointmentModal({
   const [loadingProfessionals, setLoadingProfissionais] = useState(false);
   const [loadingTimeSlots, setLoadingTimeSlots] = useState(false);
 
-  // Carregar profissionais (se não for autônomo)
   useEffect(() => {
-    if (!show || isProviderAutonomous) return;
+    if (!show) return;
 
     const fetchProfissionais = async () => {
       setLoadingProfissionais(true);
       try {
         const data = await getProfissionaisByService(providerSlug, serviceId);
         setProfissionais(data);
-        // Não selecionar o primeiro profissional automaticamente para forçar o usuário a escolher
-        // setSelectedProfissional(data.length > 0 ? data[0] : null);
+        if (data.length === 1) {
+          setSelectedProfissional(data[0]);
+        } else {
+          setSelectedProfissional(null);
+        }
       } catch (error) {
         console.error("Erro ao carregar profissionais:", error);
         setProfissionais([]);
@@ -58,7 +53,7 @@ export default function AppointmentModal({
       }
     };
     fetchProfissionais();
-  }, [show, providerSlug, serviceId, isProviderAutonomous]);
+  }, [show, providerSlug, serviceId]);
 
   // Carregar horários
   useEffect(() => {
@@ -120,9 +115,7 @@ export default function AppointmentModal({
           &times;
         </button>
         <div className={styles.modalScrollableContent}>
-
-          {/* Seletor de Profissional (aparece primeiro se não for autônomo) */}
-          {!isProviderAutonomous && (
+          {profissionais.length > 1 && (
             <>
               <h2>Selecione o Profissional</h2>
               {loadingProfessionals ? (

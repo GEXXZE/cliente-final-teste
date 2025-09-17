@@ -78,7 +78,6 @@ export default function Agendar() {
           show={isModalOpen}
           onClose={handleCloseModal}
           providerSlug={slug}
-          isProviderAutonomous={data.isAutonomous ?? false}
           serviceId={selectedService?.Id}      
         />
       )}
