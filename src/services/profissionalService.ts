@@ -3,12 +3,11 @@ import { Profissional } from "@/types/profissional";
 import { ApiTimeSlot } from "@/types/apiTimeSlot";
 import { Availability } from "@/types/availability";
 
-export const getProfissionaisByService = async (
-  providerSlug: string,
-  serviceId: number
-): Promise<Profissional[]> => {
+export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/profissionais/${providerSlug}/${serviceId}`);
+    const response = await fetch(
+      `{API_BASE_URL}/Servico/${serviceId}/profissionais?providerSlug=${providerSlug}`
+    );
     if (!response.ok) {
       throw new Error("Erro ao buscar profissionais");
     }

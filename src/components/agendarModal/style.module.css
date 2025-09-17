@@ -1,0 +1,189 @@
+body {
+    background-color: #222; /* Fundo escuro similar ao das imagens */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #eee;
+}
+
+.modal-container {
+    background-color: #1a1a1a; /* Cor de fundo do modal */
+    border-radius: 15px;
+    padding: 25px;
+    width: 350px; /* Largura aproximada baseada nas imagens */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden; /* Garante que o scrollbar seja visível dentro do modal */
+}
+
+.modal-content {
+    max-height: 500px; /* Altura máxima antes de ativar o scroll */
+    overflow-y: auto; /* Scroll vertical */
+    padding-right: 15px; /* Espaço para o scrollbar */
+}
+
+/* Estilo do scrollbar para Webkit browsers (Chrome, Safari) */
+.modal-content::-webkit-scrollbar {
+    width: 8px; /* Largura do scrollbar */
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #333; /* Cor do fundo do track */
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #555; /* Cor do thumb */
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #777; /* Cor do thumb ao passar o mouse */
+}
+
+
+h2 {
+    text-align: center;
+    color: #eee;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.calendar-grid div {
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+.calendar-grid .day-name {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+.calendar-grid .day-number {
+    background-color: #333; /* Fundo dos números */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.calendar-grid .day-number:hover {
+    background-color: #555;
+}
+
+.calendar-grid .day-number.selected {
+    background-color: #00b894; /* Verde para o dia selecionado */
+    color: white;
+}
+
+h3 {
+    text-align: center;
+    color: #eee;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+.professional-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.professional-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    background-color: #333; /* Fundo dos itens de profissional */
+}
+
+.professional-item:hover {
+    background-color: #555;
+}
+
+.professional-item.selected {
+    background-color: #00b894; /* Verde para o profissional selecionado */
+    color: white;
+}
+
+.professional-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #666; /* Cor do ícone de avatar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.professional-avatar svg {
+    fill: #ccc; /* Cor do ícone interno (se usar SVG) */
+    width: 30px;
+    height: 30px;
+}
+
+.professional-name {
+    font-size: 0.85em;
+    color: #eee;
+}
+
+.time-slots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.time-slot {
+    background-color: #333; /* Fundo dos horários */
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: bold;
+}
+
+.time-slot:hover {
+    background-color: #555;
+}
+
+.time-slot.selected {
+    background-color: #00b894; /* Verde para o horário selecionado */
+    color: white;
+}
+
+.schedule-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #00b894; /* Botão verde */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.schedule-button:hover {
+    background-color: #00967a;
+}
