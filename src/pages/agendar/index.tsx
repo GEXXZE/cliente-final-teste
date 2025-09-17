@@ -17,6 +17,9 @@ export default function Agendar() {
   const [selectedService, setSelectedService] = useState<Servico | null>(null);
 
   const handleOpenModal = (service: Servico) => {
+    console.log("Abrindo modal com os dados:");
+    console.log("providerSlug:", slug);
+    console.log("serviceId:", service.Id);
     setSelectedService(service);
     setIsModalOpen(true);
   };
