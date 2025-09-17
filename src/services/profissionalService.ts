@@ -13,12 +13,16 @@ export const getProfissionaisByService = async (providerSlug: string, serviceId:
     }
 
     const data = await response.json();
+    console.log("Dados brutos da API:", data);
 
-    return data.map((p: any) => ({
+    const profissionais = data.map((p: any) => ({
       id: p.id ?? p.ID_USUARIO ?? p.id_usuario,
       nome: p.nome ?? p.NOME ?? p.Nome,
       urlFoto: p.FotoPerfil ?? p.foto_perfil ?? "",
     }));
+    console.log("Profissionais formatados:", profissionais);
+
+    return profissionais;
   } catch (error) {
     console.error("Erro ao carregar profissionais:", error);
     return [];
