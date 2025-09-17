@@ -25,7 +25,7 @@ export const useServiceData = (slug: string) => {
       setError(null);
 
       try {
-        const response = await api.get<PrestadorData>(`Prestador/${slug}/dados-agendamento`);
+        const response = await api.get<PrestadorData>(`Prestador/${slug}/listar-servicos`);
         const apiData = response.data;
 
         let formattedData: FormattedServiceData= {
