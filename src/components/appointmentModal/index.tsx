@@ -42,7 +42,7 @@ export default function AppointmentModal({show, onClose, providerSlug, serviceId
         console.log("Profissionais recebidos:", data);
 
         setProfissionais(data);
-        if (data.length === 1) {
+        if (data.length > 0) {
           setSelectedProfissional(data[0]);
         } else {
           setSelectedProfissional(null);
