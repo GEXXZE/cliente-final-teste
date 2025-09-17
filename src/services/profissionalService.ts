@@ -46,23 +46,3 @@ export const getAvailableTimeSlots = async (
   }
 };
 
-export const getAutonomoProfissionalData = async (
-  providerSlug: string
-): Promise<Profissional | null> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/provedores-autonomos/${providerSlug}`);
-    if (!response.ok) {
-      throw new Error("Erro ao buscar dados do provedor autônomo");
-    }
-    const data: any = await response.json();
-
-    return {
-      id: data.id,
-      nome: data.nome,
-      urlFoto: data.urlFoto,
-    };
-  } catch (error) {
-    console.error("Erro ao carregar dados do provedor autônomo:", error);
-    return null;
-  }
-};

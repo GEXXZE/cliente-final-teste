@@ -4,7 +4,6 @@ import styles from "./style.module.css";
 import {
   getProfissionaisByService,
   getAvailableTimeSlots,
-  getAutonomoProfissionalData,
 } from "@/services/profissionalService";
 
 import ProfissionalSelector from "@/components/profissionalSelector";
@@ -48,43 +47,17 @@ export default function AppointmentModal({
       try {
         const data = await getProfissionaisByService(providerSlug, serviceId);
         setProfissionais(data);
-
-        if (data.length > 0) {
-          setSelectedProfissional(data[0]);
-        } else {
-          setSelectedProfissional(null);
-        }
+        setSelectedProfissional(data.length > 0 ? data[0] : null);
       } catch (error) {
         console.error("Erro ao carregar profissionais:", error);
+        setProfissionais([]);
+        setSelectedProfissional(null);
       } finally {
         setLoadingProfissionais(false);
       }
     };
-
-    const fetchAutonomousProfissional = async () => {
-      setLoadingProfissionais(true);
-      try {
-        const data = await getAutonomoProfissionalData(providerSlug);
-        if (data) {
-          setProfissionais([data]);
-          setSelectedProfissional(data);
-        } else {
-          setProfissionais([]);
-          setSelectedProfissional(null);
-        }
-      } catch (error) {
-        console.error("Erro ao carregar provedor autônomo:", error);
-      } finally {
-        setLoadingProfissionais(false);
-      }
-    };
-
-    if (!isProviderAutonomous) {
-      fetchProfissionais();
-    } else {
-      fetchAutonomousProfissional();
-    }
-  }, [show, providerSlug, isProviderAutonomous, serviceId]);
+    fetchProfissionais();
+  }, [show, providerSlug, serviceId]);
 
   // Carregar horários
   useEffect(() => {
