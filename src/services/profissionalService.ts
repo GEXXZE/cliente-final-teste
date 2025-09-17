@@ -5,14 +5,13 @@ import { Availability } from "@/types/availability";
 
 export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
-    const url = `${API_BASE_URL}/Servico/${serviceId}/profissionais`;
-    const response = await fetch(`${url}?providerSlug=${encodeURIComponent(providerSlug)}`);
+    const response = await API_BASE_URL.get(`/Servico/${serviceId}/profissionais`, {
+      params: {
+        providerSlug: providerSlug
+      }
+    });
 
-     if (!response.ok) {
-      throw new Error(`Erro ao buscar profissionais: ${response.statusText}`);
-    }
-
-    const data = await response.json();
+    const data = response.data;
     console.log("Dados brutos da API:", data);
 
     const profissionais = data.map((p: any) => ({
@@ -20,7 +19,7 @@ export const getProfissionaisByService = async (providerSlug: string, serviceId:
       nome: p.nome ?? p.NOME ?? p.Nome,
       urlFoto: p.FotoPerfil ?? p.foto_perfil ?? "",
     }));
-    
+
     console.log("Profissionais formatados:", profissionais);
 
     return profissionais;
