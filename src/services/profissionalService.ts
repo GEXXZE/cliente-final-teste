@@ -36,7 +36,8 @@ export const getAvailableTimeSlots = async (
     );
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar horários");
+      const text = await response.text();
+      throw new Error(`Erro ao buscar horários: ${response.status} - ${text}`);
     }
 
     const data: ApiTimeSlot[] = await response.json();
