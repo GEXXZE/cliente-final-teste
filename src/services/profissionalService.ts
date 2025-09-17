@@ -6,8 +6,9 @@ import { Availability } from "@/types/availability";
 export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
     const response = await API_BASE_URL.get(
-      `Servico/${serviceId}/profissionais`,
-      { params: { providerSlug } }
+      `Servico/${serviceId}/profissionais`,{
+        params: { providerSlug } 
+      }
     );
 
     const data: any[] = response.data;
@@ -15,7 +16,7 @@ export const getProfissionaisByService = async (providerSlug: string, serviceId:
     return data.map(p => ({
       id: p.id,
       nome: p.nome,
-      urlFoto: p.urlFoto,
+      urlFoto: p.FotoPerfil,
     }));
   } catch (error) {
     console.error("Erro ao carregar profissionais:", error);
