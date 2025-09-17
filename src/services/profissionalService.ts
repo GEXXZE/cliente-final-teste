@@ -6,11 +6,13 @@ import { Availability } from "@/types/availability";
 export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
     const response = await fetch(
-      `{API_BASE_URL}/Servico/${serviceId}/profissionais?providerSlug=${providerSlug}`
+      `${API_BASE_URL}/Servico/${serviceId}/profissionais?providerSlug=${providerSlug}`
     );
+
     if (!response.ok) {
       throw new Error("Erro ao buscar profissionais");
     }
+
     const data: any[] = await response.json();
 
     return data.map(p => ({
@@ -23,6 +25,7 @@ export const getProfissionaisByService = async (providerSlug: string, serviceId:
     return [];
   }
 };
+
 
 export const getAvailableTimeSlots = async (
   professionalId: number,
