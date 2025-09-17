@@ -5,15 +5,12 @@ import { Availability } from "@/types/availability";
 
 export const getProfissionaisByService = async (providerSlug: string, serviceId: number): Promise<Profissional[]> => {
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/Servico/${serviceId}/profissionais?providerSlug=${providerSlug}`
+    const response = await API_BASE_URL.get(
+      `Servico/${serviceId}/profissionais`,
+      { params: { providerSlug } }
     );
 
-    if (!response.ok) {
-      throw new Error("Erro ao buscar profissionais");
-    }
-
-    const data: any[] = await response.json();
+    const data: any[] = response.data;
 
     return data.map(p => ({
       id: p.id,
