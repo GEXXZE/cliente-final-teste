@@ -38,6 +38,9 @@ export default function AppointmentModal({show, onClose, providerSlug, serviceId
       setLoadingProfissionais(true);
       try {
         const data = await getProfissionaisByService(providerSlug, serviceId);
+
+        console.log("Profissionais recebidos:", data);
+
         setProfissionais(data);
         if (data.length === 1) {
           setSelectedProfissional(data[0]);
